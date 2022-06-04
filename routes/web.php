@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::apiResource('shipping_price',\App\Http\Controllers\ShippingPriceController::class,[
+    'only' => ['index','show','create','store','edit','update','destroy'],
+]);
