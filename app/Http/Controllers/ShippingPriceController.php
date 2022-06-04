@@ -14,7 +14,7 @@ class ShippingPriceController extends Controller
 
     public function index()
     {
-
+        return view('admin.shipping_price.index');
     }
 
     public function show(ShippingPrice $shippingPrice)
