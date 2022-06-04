@@ -26,7 +26,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['is_admin']], function () {
 
     Route::apiResource('shipping_price', ShippingPriceController::class, [
-        'only' => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'],
+        'only' => ['index', 'store', 'update', 'destroy'],
     ]);
 
 });

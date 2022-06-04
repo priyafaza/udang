@@ -15,7 +15,8 @@ class ShippingPriceController extends Controller
 
     public function index()
     {
-        return view('admin.shipping_price.index');
+        $shippingPrices = ShippingPrice::all();
+        return view('admin.shipping_price.index', compact('shippingPrices'));
     }
 
     public function store(Request $request)
@@ -51,9 +52,13 @@ class ShippingPriceController extends Controller
     {
         if ($shippingPrice->orders->count() === 0) {
             $shippingPrice->delete();
-            return redirect()->back()->withMessage('Shipping price deleted');
+            return [
+                'success'=>true
+            ];
         }
 
-        return redirect()->back()->withMessage('Shipping price contain orders, can\'t deleted');
+        return [
+            'success'=>false
+        ];
     }
 }

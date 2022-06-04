@@ -16,6 +16,11 @@ class ShippingPrice extends Model
 
     public function orders()
     {
-        $this->hasMany(Order::class);
+        return $this->hasMany(Order::class);
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return 'Rp.' . number_format($this['price'],0,'',',') . ',-';
     }
 }

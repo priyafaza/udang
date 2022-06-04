@@ -26,16 +26,16 @@ class Order extends Model
 
     public function shippingPrice()
     {
-        $this->belongsTo(ShippingPrice::class);
+        return $this->belongsTo(ShippingPrice::class);
     }
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function orderDetails()
     {
-        $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class);
     }
 }
