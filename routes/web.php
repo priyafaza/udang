@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingPriceController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,10 @@ Route::group(['middleware' => ['is_admin']], function () {
 
     Route::apiResource('shipping_price', ShippingPriceController::class, [
         'only' => ['index', 'store', 'update', 'destroy'],
+    ]);
+
+    Route::apiResource('product', ProductController::class, [
+        'only' => ['index', 'store', 'show'],
     ]);
 
 });

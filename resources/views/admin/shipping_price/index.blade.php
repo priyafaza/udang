@@ -34,9 +34,12 @@
                                                 $('#form-edit-city').val('{{ $shippingPrice['city'] }}');
                                                 $('#form-edit-price').val('{{ $shippingPrice['price'] }}')"><i class="fas fa-edit"></i></button>
 
-                                        <button class="btn btn-sm btn-danger"
-                                                onclick="deleteShippingPrice('{{ $shippingPrice['id'] }}')"><i
-                                                class="fas fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="$('#delete-{{ $shippingPrice['id'] }}').submit()"><i class="fas fa-trash"></i></button>
+                                        <form id="delete-{{ $shippingPrice['id'] }}" action="{{ route('shipping_price.destroy', $shippingPrice['id']) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="_method" value="DELETE">
+
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -117,44 +120,4 @@
         </div>
     </div>
 
-    <script>
-        function deleteShippingPrice(id) {
-            Swal.fire({
-                title: 'Are you sure to delete?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/shipping_price/' + id,
-                        type: 'DELETE',
-                        data: {
-                            '_token': '{{csrf_token()}}',
-                        },
-                        success: function (result) {
-                            if (result.success) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Shipping price has been deleted.',
-                                    'success'
-                                )
-                            } else {
-                                Swal.fire(
-                                    'Failed!',
-                                    'Shipping price contain order data.',
-                                    'danger'
-                                )
-                            }
-                        }
-                    });
-                    window.location.href = '{{ url()->current() }}';
-                }
-            })
-
-        }
-    </script>
 @stop

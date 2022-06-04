@@ -52,13 +52,9 @@ class ShippingPriceController extends Controller
     {
         if ($shippingPrice->orders->count() === 0) {
             $shippingPrice->delete();
-            return [
-                'success'=>true
-            ];
+            return redirect()->back()->withMessage('Shipping price deleted');
         }
 
-        return [
-            'success'=>false
-        ];
+        return redirect()->back()->withMessage('Shipping price contain order, can\'t deleted');
     }
 }
