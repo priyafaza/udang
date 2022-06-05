@@ -29,7 +29,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/my/order', [HomeController::class, 'order'])->name('my.order');
-Route::get('/my/order/{order}', [HomeController::class, 'orderDetail'])->name('my.order.detail');
+Route::get('/my/order/invoice/{order}', [HomeController::class, 'orderDetail'])->name('my.order.detail');
 Route::get('/my/order/new', [HomeController::class, 'createOrder'])->name('my.order.new');
 Route::post('/my/order/new', [HomeController::class, 'addProduct'])->name('my.order.new.addProduct');
 Route::post('/add-to-cart', [HomeController::class, 'addToCart']);

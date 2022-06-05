@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->user()['is_admin']) {
-            return redirect('/shipping_price');
+            return redirect('/order');
         }
 
         $products = Product::with('productDetails')->get();
