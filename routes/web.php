@@ -49,6 +49,6 @@ Route::group(['middleware' => ['is_admin']], function () {
     Route::delete('product/removeVariant/{productDetail}', [ProductController::class, 'removeVariant'])->name('productVariant.remove');
 
     Route::apiResource('order', OrderController::class, [
-        'only' => ['index'],
+        'only' => ['index', 'show'],
     ]);
 });

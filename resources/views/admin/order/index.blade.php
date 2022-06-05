@@ -38,7 +38,7 @@
                                     <td>{{ $order['total_payment'] }}</td>
                                     <td>{{ $order['status'] }}</td>
                                     <td>
-                                        <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i></button>
+                                        <a href="/order/{{ $order['id'] }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

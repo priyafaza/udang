@@ -18,4 +18,8 @@ class OrderController extends Controller
         return view('admin.order.index', compact('orders'));
     }
 
+    public function show(Order $order)
+    {
+        return view('admin.order.show', compact('order'));
+    }
 }
