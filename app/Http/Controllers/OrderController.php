@@ -17,4 +17,5 @@ class OrderController extends Controller
         $orders = Order::with('orderDetails', 'shippingPrice', 'user')->get();
         return view('admin.order.index', compact('orders'));
     }
+
 }

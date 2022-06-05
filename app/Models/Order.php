@@ -15,6 +15,7 @@ class Order extends Model
     ];
 
     const STATUS_OPTION =  [
+        'draft',
         'pending_payment',
         'success_payment',
         'processing',

@@ -27,7 +27,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/api/product-variant/{product}',[HomeController::class,'getProductVariant']);
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/my/order', [HomeController::class, 'order'])->name('my.order');
+Route::get('/my/order/new', [HomeController::class, 'createOrder'])->name('my.order.new');
+Route::post('/my/order/new', [HomeController::class, 'addProduct'])->name('my.order.new.addProduct');
 
 Route::group(['middleware' => ['is_admin']], function () {
 
