@@ -9,14 +9,12 @@
                 <div class="row">
                     <!-- /.col -->
                     @foreach($products as $product)
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card card-success">
                             <div class="card-header">
                                 <h3 class="card-title">{{ $product['name'] }}</h3>
 
                                 <div class="card-tools">
-{{--                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>--}}
-{{--                                    </button>--}}
                                 </div>
                                 <!-- /.card-tools -->
                             </div>
@@ -37,6 +35,7 @@
                                             <tr>
                                                 <th>Size</th>
                                                 <th>Price /Kg</th>
+                                                <th>Stock</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -44,6 +43,7 @@
                                                 <tr>
                                                     <td>{{ $productDetail['size'] }}</td>
                                                     <td>{{ $productDetail['formatted_price'] }}</td>
+                                                    <td>{{ $productDetail['stock'] }}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

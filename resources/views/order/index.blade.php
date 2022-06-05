@@ -39,15 +39,15 @@
                             @foreach($orders as $order)
                                 <tr>
                                     <td>{{ $order['shipping_address'] }}</td>
-                                    <td>{{ $order['total_item'] }}</td>
+                                    <td>{{ $order['total_item'] }} ({{ $order['total_weight'] }} Kg)</td>
                                     <td>{{ $order['amount'] }}</td>
                                     <td>{{ $order->shippingPrice['city'] }}<br>
-                                        {{ $order->shippingPrice['formatted_price'] }}
+                                        {{ $order['total_shipping_price'] }}
                                     </td>
-                                    <td>{{ $order['total_amount'] }}</td>
+                                    <td>{{ $order['total_payment'] }}</td>
                                     <td>{{ $order['status'] }}</td>
                                     <td>
-                                        <button class="btn btn-info btn-sm"><i class="fas fa-eye"></button>
+                                        <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i></button>
                                     </td>
                                 </tr>
                             @endforeach

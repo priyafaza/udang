@@ -10,6 +10,7 @@ class OrderDetail extends Model
     use HasFactory;
 
     protected $fillable = [
+        'product_detail_id',
         'amount',
         'price',
     ];

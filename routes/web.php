@@ -22,17 +22,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $min_price_product = ProductDetail::orderBy('price')->value('price');
     $products = Product::orderBy('id')->take(5)->get();
-    return view('welcome', compact('min_price_product','products'));
+    return view('welcome', compact('min_price_product', 'products'));
 });
 
 Auth::routes();
-
-Route::get('/api/product-variant/{product}',[HomeController::class,'getProductVariant']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/my/order', [HomeController::class, 'order'])->name('my.order');
 Route::get('/my/order/new', [HomeController::class, 'createOrder'])->name('my.order.new');
 Route::post('/my/order/new', [HomeController::class, 'addProduct'])->name('my.order.new.addProduct');
+Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
+Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart']);
+Route::post('/create-order', [HomeController::class, 'submitOrder']);
 
 Route::group(['middleware' => ['is_admin']], function () {
 
