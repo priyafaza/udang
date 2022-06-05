@@ -20,4 +20,13 @@ class ProductDetail extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return 'Rp.' . number_format($this['price'],0,'',',') . ',-';
+    }
 }

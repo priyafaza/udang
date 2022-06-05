@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -46,5 +47,31 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return view('admin.product.show', compact('product'));
+    }
+
+    public function addVariant(Product $product, Request $request)
+    {
+        $request->validate([
+            'size'=>'required|integer',
+            'stock'=>'required|integer',
+            'price'=>'required|integer',
+        ]);
+
+        $productDetails = $product->productDetails()->where('size',$request['size'])->firstOrNew();
+        $productDetails['size'] = $request['size'];
+        $productDetails['stock'] = $request['stock'];
+        $productDetails['price'] = $request['price'];
+        $productDetails->save();
+
+        return redirect()->back()->withMessage('Product Variant created');
+    }
+
+    public function removeVariant(ProductDetail $productDetail)
+    {
+        if($productDetail->orderDetails()->count == 0) {
+            $productDetail->delete();
+            return redirect()->back()->withMessage('Product Variant deleted');
+        }
+        return redirect()->back()->withMessage('Product Variant has in order details, can\'t deleted');
     }
 }

@@ -12,11 +12,30 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <img src="{{ $product['image'] }}">
-                            <h6>Name : {{ $product['name'] }}</h6>
-                            <h6>Summary : {{ $product['summary'] }}</h6>
-                            <h6>Description : </h6>
-                            <p>{{ $product['description'] }}</p>
+                            <div class="row">
+                                <div class="col-3 text-right">
+                                    <img src="{{ $product['image'] }}" style="height: 300px; width: auto">
+                                </div>
+                                <div class="col-8">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td colspan="2">{{ $product['name'] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Summary</td>
+                                            <td colspan="2">{{ $product['summary'] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">Description : <br>
+                                                {{ $product['description'] }}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -34,16 +53,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($product->productDetails() as $productVariant)
+                            @foreach($product->productDetails()->get() as $productVariant)
                                 <tr>
                                     <td>{{ $productVariant['size'] }}</td>
-                                    <td>{{ $productVariant['price'] }}</td>
+                                    <td>{{ $productVariant['formatted_price'] }}</td>
                                     <td>{{ $productVariant['stock'] }}</td>
                                     <td>
-                                        <form action="{{ route('product.destroy', $productVariant['id']) }}" method="POST">
+                                        <form
+                                            action="{{ route('productVariant.remove', $productVariant['id']) }}"
+                                            method="POST">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <button type="submit" class="btn btn-sm btn-danger"><i
+                                                    class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -66,28 +88,23 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add Product</h4>
+                    <h4 class="modal-title">Add Product Variant</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('productVariant.add', $product['id']) }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label>Image</label>
-                            <input name="image" type="file" class="form-control"
-                                   accept="image/*" required>
+                            <label>Size</label>
+                            <input type="number" min="0" class="form-control" name="size" required>
                         </div>
                         <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" name="name" required>
+                            <label>Price per Kg</label>
+                            <input type="number" min="0" class="form-control" name="price" required>
                         </div>
                         <div class="form-group">
-                            <label>Summary</label>
-                            <textarea class="form-control" rows="3" name="summary" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" rows="6" name="description" required></textarea>
+                            <label>Stock (Kg)</label>
+                            <input type="number" min="0" class="form-control" name="stock" required>
                         </div>
 
                     </div>

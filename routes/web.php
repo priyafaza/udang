@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingPriceController;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,10 @@ Route::group(['middleware' => ['is_admin']], function () {
         'only' => ['index', 'store', 'show'],
     ]);
 
+    Route::post('product/{product}/add', [ProductController::class, 'addVariant'])->name('productVariant.add');
+    Route::delete('product/removeVariant/{productDetail}', [ProductController::class, 'removeVariant'])->name('productVariant.remove');
+
+    Route::apiResource('order', OrderController::class, [
+        'only' => ['index'],
+    ]);
 });

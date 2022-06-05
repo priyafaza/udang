@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title') Shipping Price @stop
+@section('title') Order List @stop
 
 @section('content')
     <section class="content">
@@ -8,38 +8,40 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Shipping Price List</h3>
+                        <h3 class="card-title">Order List</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addData"><i
-                                class="fas fa-plus"></i> Add data
-                        </button>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>City</th>
-                                <th>Price</th>
+                                <th>User</th>
+                                <th>Shipping Address</th>
+                                <th>Total item</th>
+                                <th>Amount</th>
+                                <th>Shipping Price</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($shippingPrices as $shippingPrice)
-                                <tr>
-                                    <td>{{ $shippingPrice['city'] }}</td>
-                                    <td>{{ $shippingPrice['formatted_price'] }}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#editData"
-                                                onclick="$('#form-edit').attr('action', '/shipping_price/{{ $shippingPrice['id'] }}');
-                                                    $('#form-edit-city').val('{{ $shippingPrice['city'] }}');
-                                                    $('#form-edit-price').val('{{ $shippingPrice['price'] }}')"><i class="fas fa-edit"></i></button>
-
-                                        <button class="btn btn-sm btn-danger"
-                                                onclick="deleteShippingPrice('{{ $shippingPrice['id'] }}')"><i
-                                                class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>{{ $order->user['name'] }}</td>
+                                        <td>{{ $order['shipping_address'] }}</td>
+                                        <td>{{ $order['total_item'] }}</td>
+                                        <td>{{ $order['amount'] }}</td>
+                                        <td>{{ $order->shippingPrice['city'] }}<br>
+                                            {{ $order->shippingPrice['formatted_price'] }}
+                                        </td>
+                                        <td>{{ $order['total_amount'] }}</td>
+                                        <td>{{ $order['status'] }}</td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm"><i class="fas fa-eye"></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -51,110 +53,4 @@
         </div>
         <!-- /.row -->
     </section>
-
-    <div id="addData" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Shipping Price</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <form action="{{ route('shipping_price.store') }}" method="POST">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="form-group">
-                            <label>City Name</label>
-                            <input type="text" class="form-control" name="city" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Price (Rp)</label>
-                            <input type="number" min="0" class="form-control" name="price" required>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="editData" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Shipping Price</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <form id="form-edit" action="#" method="POST">
-                    <input type="hidden" name="_method" value="PUT">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="form-group">
-                            <label>City Name</label>
-                            <input type="text" id="form-edit-city" class="form-control" name="city" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Price (Rp)</label>
-                            <input type="number" id="form-edit-price" min="0" class="form-control" name="price" required>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-info">Update</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        function deleteShippingPrice(id) {
-            Swal.fire({
-                title: 'Are you sure to delete?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/shipping_price/' + id,
-                        type: 'DELETE',
-                        data: {
-                            '_token': '{{csrf_token()}}',
-                        },
-                        success: function (result) {
-                            if (result.success) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Shipping price has been deleted.',
-                                    'success'
-                                )
-                            } else {
-                                Swal.fire(
-                                    'Failed!',
-                                    'Shipping price contain order data.',
-                                    'danger'
-                                )
-                            }
-                        }
-                    });
-                    window.location.href = '{{ url()->current() }}';
-                }
-            })
-
-        }
-    </script>
 @stop
