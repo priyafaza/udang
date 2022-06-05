@@ -21,6 +21,6 @@ class ShippingPrice extends Model
 
     public function getFormattedPriceAttribute()
     {
-        return 'Rp.' . number_format($this['price'],0,'',',') . ',-';
+        return formatPrice($this['price']);
     }
 }

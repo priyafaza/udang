@@ -13,8 +13,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-3 text-right">
-                                    <img src="{{ $product['image'] }}" style="height: 300px; width: auto">
+                                <div class="col-4 text-right">
+                                    <img src="{{ $product['image'] }}" style="height: 200px; width: auto">
                                 </div>
                                 <div class="col-8">
                                     <table class="table">

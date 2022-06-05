@@ -4,6 +4,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingPriceController;
+use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $min_price_product = ProductDetail::orderBy('price')->value('price');
+    $products = Product::orderBy('id')->take(5)->get();
+    return view('welcome', compact('min_price_product','products'));
 });
 
 Auth::routes();
