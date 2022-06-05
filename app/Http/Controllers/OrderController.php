@@ -22,4 +22,16 @@ class OrderController extends Controller
     {
         return view('admin.order.show', compact('order'));
     }
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        if(!in_array($request['status'], Order::STATUS_OPTION)){
+            abort(404);
+        }
+
+        $order['status'] = $request['status'];
+        $order->save();
+
+        return redirect()->back()->withMessage('Order status updated');
+    }
 }

@@ -42,7 +42,18 @@
                             <!-- /.col -->
                             <div class="col-sm-4 invoice-col">
                                 <b>Invoice #{{ $order->created_at->timestamp }}/{{ $order['id'] }}</b><br>
-                                <b>Payment Status : {{ $order['status'] }}</b><br>
+                                <b>Payment Status : {{ $order['status'] }}</b><br><br>
+
+                                <form action="/order/{{ $order['id'] }}/update-status" method="POST">
+                                    @csrf
+                                    <select name="status" id="cars" required>
+                                        @foreach(\App\Models\Order::STATUS_OPTION as $status)
+                                            <option
+                                                value="{{ $status }}" {{ $status == $order['status']?'selected':'' }}>{{ $status }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-info btn-sm">update</button>
+                                </form>
 
                             </div>
                             <!-- /.col -->
@@ -64,13 +75,13 @@
                                     </thead>
                                     <tbody>
                                     @foreach($order['orderDetails'] as $orderDetail)
-                                    <tr>
-                                        <td>{{ $orderDetail['amount'] }} Kg</td>
-                                        <td>{{ $orderDetail['productDetail']['product']['name'] }}</td>
-                                        <td>{{ $orderDetail['productDetail']['formatted_price'] }}</td>
-                                        <td>{{ $orderDetail['productDetail']['product']['summary'] }}</td>
-                                        <td>{{ formatPrice($orderDetail['amount'] * $orderDetail['productDetail']['price']) }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $orderDetail['amount'] }} Kg</td>
+                                            <td>{{ $orderDetail['productDetail']['product']['name'] }}</td>
+                                            <td>{{ $orderDetail['productDetail']['formatted_price'] }}</td>
+                                            <td>{{ $orderDetail['productDetail']['product']['summary'] }}</td>
+                                            <td>{{ formatPrice($orderDetail['amount'] * $orderDetail['productDetail']['price']) }}</td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>

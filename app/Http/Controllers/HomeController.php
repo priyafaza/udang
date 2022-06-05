@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ShippingPrice;
@@ -120,5 +121,10 @@ class HomeController extends Controller
         $cart->destroy();
 
         return redirect('my/order')->withMessage('Order created');
+    }
+
+    public function orderDetail(Order $order)
+    {
+        return view('order.show', compact('order'));
     }
 }
