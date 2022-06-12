@@ -57,7 +57,14 @@
                                 <tr>
                                     <td>{{ $productVariant['size'] }}</td>
                                     <td>{{ $productVariant['formatted_price'] }}</td>
-                                    <td>{{ $productVariant['stock'] }}</td>
+                                    <td>
+                                        <form action="{{ route('productVariant.update', $productVariant['id']) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="_method" value="PATCH">
+                                            <input type="number" name="stock" value="{{ $productVariant['stock'] }}" required onkeyup="$('#btn-update-productVariant-{{ $productVariant['id'] }}').show()">
+                                            <button type="submit" class="btn btn-sm btn-primary" style="display: none" id="btn-update-productVariant-{{ $productVariant['id'] }}">Update Stock</button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <form
                                             action="{{ route('productVariant.remove', $productVariant['id']) }}"

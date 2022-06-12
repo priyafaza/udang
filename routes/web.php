@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingPriceController;
+use App\Http\Controllers\ReportController;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Route;
@@ -48,10 +49,16 @@ Route::group(['middleware' => ['is_admin']], function () {
 
     Route::post('product/{product}/add', [ProductController::class, 'addVariant'])->name('productVariant.add');
     Route::delete('product/removeVariant/{productDetail}', [ProductController::class, 'removeVariant'])->name('productVariant.remove');
+    Route::patch('product/updateVariant/{productDetail}', [ProductController::class, 'updateVariant'])->name('productVariant.update');
 
     Route::apiResource('order', OrderController::class, [
         'only' => ['index', 'show'],
     ]);
+
+    Route::apiResource('report', ReportController::class, [
+        'only' => ['index', 'store', 'show'],
+    ]);
+
 
     Route::post('order/{order}/update-status', [OrderController::class, 'updateStatus']);
 });

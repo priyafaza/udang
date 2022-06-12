@@ -68,10 +68,22 @@ class ProductController extends Controller
 
     public function removeVariant(ProductDetail $productDetail)
     {
-        if($productDetail->orderDetails()->count == 0) {
+        if($productDetail->orderDetails()->count() == 0) {
             $productDetail->delete();
             return redirect()->back()->withMessage('Product Variant deleted');
         }
         return redirect()->back()->withMessage('Product Variant has in order details, can\'t deleted');
+    }
+
+    public function updateVariant(Request $request, ProductDetail $productDetail)
+    {
+        $request->validate([
+            'stock'=>'required|integer|min:1'
+        ]);
+
+        $productDetail['stock'] = $request['stock'];
+        $productDetail->save();
+
+        return redirect()->back()->withMessage('Product Variant stocks been updated');
     }
 }
