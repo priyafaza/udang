@@ -32,8 +32,8 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <form action="" method="GET">
-                            <input type="date" name="start_date">
-                            <input type="date" name="end_date">
+                            <input type="date" name="start_date" value="{{ isset($_GET['start_date'])?$_GET['start_date']:now()->format('Y-m-d') }}">
+                            <input type="date" name="end_date" value="{{ isset($_GET['end_date'])?$_GET['end_date']:now()->format('Y-m-d') }}">
                             <button type="submit">Filter</button>
                         </form>
                         <table id="example1" class="table table-bordered table-striped">
