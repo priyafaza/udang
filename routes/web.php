@@ -31,13 +31,13 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/my/order', [HomeController::class, 'order'])->name('my.order');
 Route::get('/my/order/invoice/{order}', [HomeController::class, 'orderDetail'])->name('my.order.detail');
+Route::get('/my/order/invoice/{order}/upload', [HomeController::class, 'uploadForm'])->name('my.order.detail.upload');
+Route::patch('/my/order/invoice/{order}/upload', [HomeController::class, 'updatePayment'])->name('my.order.detail.upload.save');
 Route::get('/my/order/new', [HomeController::class, 'createOrder'])->name('my.order.new');
 Route::post('/my/order/new', [HomeController::class, 'addProduct'])->name('my.order.new.addProduct');
 Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
 Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart']);
 Route::post('/create-order', [HomeController::class, 'submitOrder']);
-
-Route::get('/my/order/invoice/upload/', [HomeController::class, 'uploadOrderDetail'])->name('my.order.upload');
 
 Route::group(['middleware' => ['is_admin']], function () {
 

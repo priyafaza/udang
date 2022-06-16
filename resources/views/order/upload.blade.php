@@ -7,21 +7,28 @@
                 <div class="col-12">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Upload Bukti Transfer</h3>
+                            <h3 class="card-title">Payment Confirmation</h3>
                         </div>
-                    <div class="card-body">
-                            <h4>Total Payment : </h4>
+                        <div class="card-body">
+                            <h4 class="text-center">Total Payment</h4>
+                            <h2 class="text-center">{{ $order['total_payment'] }}</h2>
                             <p>No.Rekening Perusahaan</p>
-                            <p></p>
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
-                               Upload Bukti Transfer
-                            <input type="file" name="fileToUpload" id="fileToUpload">
-                            <input type="submit" value="Upload Image" name="submit">
-                        </form>
-                </div>
+                            <p>Bank Name: BCA</p>
+                            <p>Bank Account Name : PT.Blalblabla</p>
+                            <p>Bank Account Number : 123456</p>
+                            <hr>
+                            <form action="{{ route('my.order.detail.upload.save', $order['id']) }}" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="_method" value="PATCH">
+                                @csrf
+                                <label>Upload Bukti Transfer</label>
+                                <input type="file" name="payment_proof" class="form-control" id="fileToUpload">
+                                <br>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                            </form>
+                        </div>
 
-<!-- /.card-body -->
-            </div>
-        </div><!-- /.container-fluid -->
+                        <!-- /.card-body -->
+                    </div>
+                </div><!-- /.container-fluid -->
     </section>
 @endsection

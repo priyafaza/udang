@@ -85,19 +85,19 @@ class HomeController extends Controller
     public function submitOrder(Request $request)
     {
         $request->validate([
-            'product_detail_id'=>'required',
-            'amount'=>'required',
-            'shipping_address'=>'required|string',
+            'product_detail_id' => 'required',
+            'amount' => 'required',
+            'shipping_address' => 'required|string',
             'shipping_price_id' => 'required|exists:shipping_prices,id'
         ]);
 
-        for($i = 0; $i < count($request['product_detail_id']); $i++) {
+        for ($i = 0; $i < count($request['product_detail_id']); $i++) {
             $productDetail = ProductDetail::find($request['product_detail_id'][$i]);
-            if($productDetail['stock'] < $request['amount'][$i]){
-                return redirect()->back()->withErrors('Stock product '.$productDetail->product['name'].' - '.$productDetail['size'].' only '.$productDetail['stock'].' left');
+            if ($productDetail['stock'] < $request['amount'][$i]) {
+                return redirect()->back()->withErrors('Stock product ' . $productDetail->product['name'] . ' - ' . $productDetail['size'] . ' only ' . $productDetail['stock'] . ' left');
             }
         }
-        DB::transaction(function () use($request) {
+        DB::transaction(function () use ($request) {
             $currentUser = $request->user();
             $order = $currentUser->orders()->where('status', 'draft')->first();
             $order['shipping_price_id'] = $request['shipping_price_id'];
@@ -128,9 +128,27 @@ class HomeController extends Controller
         return view('order.show', compact('order'));
     }
 
-    public function  uploadOrderDetail()
+    public function uploadForm(Order $order)
     {
-        return view('order.upload', compact('upload'));
+        return view('order.upload', compact('order'));
+    }
+
+    public function updatePayment(Request $request, Order $order)
+    {
+        $request->validate([
+            'payment_proof' => "required|file|mimes:jpeg,png,jpg,gif,svg|max:1000"
+        ]);
+
+        $image_path = $order['payment_proof'];
+        if ($request->file('payment_proof') != '') {
+            $main_image = uniqid() . '.' . $request->file('payment_proof')->getClientOriginalExtension();
+            $request->file('payment_proof')->move(storage_path('app/public/payment_proof'), $main_image);
+            $image_path = '/storage/payment_proof/' . $main_image;
+        }
+        $order['payment_proof'] = $image_path;
+        $order->save();
+
+        return redirect()->route('my.order.detail', $order['id'])->withMessage('Payment proof uploaded');
     }
 
 }

@@ -13,6 +13,7 @@ class Order extends Model
         'shipping_price_id',
         'shipping_address',
         'status',
+        'payment_proof',
     ];
 
     const STATUS_OPTION = [
