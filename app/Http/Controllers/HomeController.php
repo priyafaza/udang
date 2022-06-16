@@ -130,11 +130,18 @@ class HomeController extends Controller
 
     public function uploadForm(Order $order)
     {
+        if($order['status'] !== 'pending_payment'){
+            abort(404);
+        }
         return view('order.upload', compact('order'));
     }
 
     public function updatePayment(Request $request, Order $order)
     {
+        if($order['status'] !== 'pending_payment'){
+            abort(404);
+        }
+
         $request->validate([
             'payment_proof' => "required|file|mimes:jpeg,png,jpg,gif,svg|max:1000"
         ]);
