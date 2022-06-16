@@ -43,6 +43,7 @@
                             <div class="col-sm-4 invoice-col">
                                 <b>Invoice #{{ $order->created_at->timestamp }}/{{ $order['id'] }}</b><br>
                                 <b>Payment Status : {{ $order['status'] }}</b><br>
+                                <button class="btn btn-info btn-sm">Upload Bukti</button>
 
                             </div>
                             <!-- /.col -->
