@@ -23,7 +23,7 @@ class ReportController extends Controller
         $totalPending = 0;
         $totalComplete = 0;
         foreach ($pendingOrders as $pendingOrder) {
-            $totalPending += ($pendingOrder->amount() + $pendingOrders->totalShippingPrice());
+            $totalPending += ($pendingOrder->amount() + $pendingOrder->totalShippingPrice());
         }
         foreach ($completeOrders as $completeOrder) {
             $totalComplete += ($completeOrder->amount() + $completeOrder->totalShippingPrice());
