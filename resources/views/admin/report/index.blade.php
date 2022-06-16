@@ -32,8 +32,8 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <form action="" method="GET">
-                            <input type="date" name="start_date">
-                            <input type="date" name="end_date">
+                            <input type="datetime-local" name="start_date">
+                            <input type="datetime-local" name="end_date">
                             <button type="submit">Filter</button>
                         </form>
                         <table id="example1" class="table table-bordered table-striped">
