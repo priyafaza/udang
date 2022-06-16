@@ -43,9 +43,10 @@
                             <div class="col-sm-4 invoice-col">
                                 <b>Invoice #{{ $order->created_at->timestamp }}/{{ $order['id'] }}</b><br>
                                 <b>Payment Status : {{ $order['status'] }}</b><br>
+                                @if($order['status'] === 'pending_payment')
                                 <a href="{{ route('my.order.detail.upload',$order['id']) }}" class="btn btn-success">Upload
                                     Bukti Transfer</a>
-
+                                @endif
                             </div>
                             <!-- /.col -->
                         </div>
