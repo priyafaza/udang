@@ -97,7 +97,8 @@ class HomeController extends Controller
                 return redirect()->back()->withErrors('Stock product ' . $productDetail->product['name'] . ' - ' . $productDetail['size'] . ' only ' . $productDetail['stock'] . ' left');
             }
         }
-        DB::transaction(function () use ($request) {
+        $order = null;
+        DB::transaction(function () use ($request, &$order) {
             $currentUser = $request->user();
             $order = $currentUser->orders()->where('status', 'draft')->first();
             $order['shipping_price_id'] = $request['shipping_price_id'];
@@ -120,7 +121,7 @@ class HomeController extends Controller
         $cart = new Cart();
         $cart->destroy();
 
-        return redirect('my/order')->withMessage('Order created');
+        return redirect()->route('my.order.detail.upload',$order['id'])->withMessage('Please transfer with following instructions');
     }
 
     public function orderDetail(Order $order)
