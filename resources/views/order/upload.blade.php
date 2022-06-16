@@ -12,6 +12,7 @@
                     <div class="card-body">
                             <h4>Total Payment : </h4>
                             <p>No.Rekening Perusahaan</p>
+                            <p></p>
                         <form action="upload.php" method="post" enctype="multipart/form-data">
                                Upload Bukti Transfer
                             <input type="file" name="fileToUpload" id="fileToUpload">

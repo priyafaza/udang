@@ -127,4 +127,10 @@ class HomeController extends Controller
     {
         return view('order.show', compact('order'));
     }
+
+    public function  uploadOrderDetail()
+    {
+        return view('order.upload', compact('upload'));
+    }
+
 }

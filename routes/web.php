@@ -37,6 +37,8 @@ Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
 Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart']);
 Route::post('/create-order', [HomeController::class, 'submitOrder']);
 
+Route::get('/my/order/invoice/upload/', [HomeController::class, 'uploadOrderDetail'])->name('my.order.upload');
+
 Route::group(['middleware' => ['is_admin']], function () {
 
     Route::apiResource('shipping_price', ShippingPriceController::class, [
