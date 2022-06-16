@@ -11,8 +11,8 @@ class ReportController extends Controller
     {
         if (isset($request['start_date']) && isset($request['end_date'])) {
             $orders = Order::where('status', 'done')
-                ->where('created_at', '>=', $request['start_date'])
-                ->where('created_at', '<=', $request['end_date'])
+                ->whereDate('created_at', '>=', $request['start_date'])
+                ->whereDate('created_at', '<=', $request['end_date'])
                 ->get();
         } else {
             $orders = Order::where('status', 'done')->get();
