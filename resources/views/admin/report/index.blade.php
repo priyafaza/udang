@@ -12,11 +12,15 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <input type="date" name="date1">
-                        <input type="date" name="date2">
+                        <form action="" method="GET">
+                            <input type="date" name="start_date">
+                            <input type="date" name="end_date">
+                            <button type="submit">Filter</button>
+                        </form>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>Date</th>
                                 <th>User</th>
                                 <th>Shipping Address</th>
                                 <th>Total item</th>
@@ -27,8 +31,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{-- @foreach($orders as $order)
+                            @foreach($orders as $order)
                                 <tr>
+                                    <td>{{ $order['created_at'] }}</td>
                                     <td>{{ $order['user']['name'] }}</td>
                                     <td>{{ $order['shipping_address'] }}</td>
                                     <td>{{ $order['total_item'] }} ({{ $order['total_weight'] }} Kg)</td>
@@ -39,7 +44,7 @@
                                     <td>{{ $order['total_payment'] }}</td>
                                     <td>{{ $order['status'] }}</td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
