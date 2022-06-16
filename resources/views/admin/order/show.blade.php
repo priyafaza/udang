@@ -116,6 +116,11 @@
                             </div>
                             <!-- /.col -->
                         </div>
+                        @if($order['payment_proof'] !== null)
+                            <hr>
+                            <h6>Payment Proof</h6>
+                            <img src="{{ $order['payment_proof'] }}" style="height: 300px; width: auto">
+                        @endif
                         <!-- /.row -->
                     </div>
                     <!-- /.invoice -->
