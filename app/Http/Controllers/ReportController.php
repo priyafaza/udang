@@ -17,6 +17,18 @@ class ReportController extends Controller
         } else {
             $orders = Order::where('status', 'done')->get();
         }
-        return view('admin.report.index', compact('orders'));
+
+        $completeOrders = Order::where('status', 'done')->get();
+        $pendingOrders = Order::where('status', '<>', 'done')->get();
+        $totalPending = 0;
+        $totalComplete = 0;
+        foreach ($pendingOrders as $pendingOrder) {
+            $totalPending += ($pendingOrder->amount() + $pendingOrders->totalShippingPrice());
+        }
+        foreach ($completeOrders as $completeOrder) {
+            $totalComplete += ($completeOrder->amount() + $completeOrder->totalShippingPrice());
+        }
+
+        return view('admin.report.index', compact('orders', 'totalComplete', 'totalPending'));
     }
 }

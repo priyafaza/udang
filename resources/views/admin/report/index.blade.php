@@ -10,6 +10,25 @@
                     <div class="card-header">
                         <h3 class="card-title">Report List</h3>
                     </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4>Complete transaction</h4>
+                                    <h2>{{ formatPrice($totalComplete) }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4>Pending transaction</h4>
+                                    <h2>{{ formatPrice($totalPending) }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <form action="" method="GET">
